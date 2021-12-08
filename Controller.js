@@ -2,11 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const models = require('./models');
+const { Op } = require("sequelize");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json());
+
 let tarefa = models.Tarefa;
 let subtarefa = models.SubTarefa;
 
@@ -164,6 +166,34 @@ app.post('/tarefa/exclui',async(req,res) => {
         res.send(JSON.stringify(value='Exclusao ok'));
     }
 });
+
+// Consulta todas as Tarefas ordenadas por Prazo
+app.get('/cronograma',async(req,res) => {
+    let consulta = await tarefa.findAll({
+        attributes: ['id','titulo','prazo','descricao','status','dataFazer','tempoTotal'],
+        where: {status: {[Op.like]: 'Nao Concluido'}},
+        order: [
+            ['prazo', 'ASC']
+        ] 
+    });
+    if(consulta === null) {
+        res.send(JSON.stringify(value='erro'));
+    } else {
+        res.send(consulta);
+    }
+});
+
+
+//Verifica a progressão de termino das tarefas para a barra
+app.get('/tarefa/progresso',async(req,res) => {
+    let progresso = await tarefa.count({
+        where: { status: {[Op.like]: 'Concluído'}}
+    });
+    console.log(progresso); 
+    let total = await tarefa.count();
+    console.log(total);
+    res.send((progresso/total)*100);
+})
 
 let port = process.env.PORT || 3000;
 app.listen(port,(req,res) => {

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import styles from './style';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 function TarefaScreen({ route, navigation }) {
 
@@ -12,6 +15,31 @@ function TarefaScreen({ route, navigation }) {
   const [dataFazer, setDataFazer] = useState(null);
   const [tempoTotal, setTempoTotal] = useState(null);
   const [mensagem, setMensagem] = useState(null);
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setPrazo(date.toLocaleDateString());
+    setDate(currentDate);
+    
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
 
   async function gravaTarefa() {
     if(titulo == null || prazo == null) {
@@ -58,7 +86,7 @@ function TarefaScreen({ route, navigation }) {
   }
 
   async function excluiTarefa() {
-    if(id == null || titulo == null || prazo == null || descricao == null) {
+    if(tarefaId == null) {
       setMensagem("Faltam dados para exclusão");
     } else {
       setMensagem(null);
@@ -103,11 +131,41 @@ function TarefaScreen({ route, navigation }) {
           value={titulo}
         />
         <Text style={styles.texto}>Prazo:</Text>
-        <TextInput
+        <TouchableOpacity
+          style={styles.entrada}
+          onPress={() => {
+            showDatepicker();
+          }}
+        >
+          <Text  style={styles.textoData}>Selecionar Data</Text>
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity
+          style={styles.botaoData}
+          onPress={() => {
+            showTimepicker();
+          }}
+        >
+          <Text  style={styles.entrada}>Hora</Text>
+        </TouchableOpacity> */}
+
+        {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+
+        {/* <TextInput
           style={styles.entrada}
           onChangeText={setPrazo}
           value={prazo}
-        />
+        /> */}
+        <Text style={styles.entrada}>{prazo}</Text>
         <Text style={styles.texto}>Descricao:</Text>
         <TextInput
           style={styles.entrada}
@@ -115,11 +173,17 @@ function TarefaScreen({ route, navigation }) {
           value={descricao}
         />
         <Text style={styles.texto}>Status:</Text>
-        <TextInput
-          style={styles.entrada}
-          onChangeText={setStatus}
-          value={status}
-        />
+
+        <Picker
+          selectedValue={status}
+          onValueChange={(value, index) =>
+          setStatus(value)}
+          mode = "dropdown"
+          style={styles.picker}
+        >
+          <Picker.Item label="Não Concluído" value="Não Concluído" />
+          <Picker.Item label="Concluído" value="Concluído" />
+        </Picker>
         <Text style={styles.textoMensagem}>{mensagem}</Text>
       </View>
       <View style={styles.conjuntoBotoes}>

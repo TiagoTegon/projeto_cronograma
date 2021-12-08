@@ -108,6 +108,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#ff0043",
     marginRight: 5,
   },
+  picker: {
+    marginVertical: 30,
+    width: 300,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#666',
+  },
+  botaoData: {
+    
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "90%",
+    height: 40,
+  },
+  textoData: {
+    color: "blue",
+    fontSize: 22,
+    fontWeight: "bold",
+    textAlign: "center",
+  }
 });
 
 export default styles;

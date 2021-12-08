@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import styles from './style';
-//import ProgressBar from '../../util/progress-bar.component';
-import ProgressBar from "@ramonak/react-progress-bar";
+import ProgressBar from '../../util/progress-bar.component';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -10,6 +9,7 @@ function ListaTarefaScreen({ navigation }) {
 
   const [listaTarefa, setListaTarefa] = useState([]);
   const [iniciado, setIniciado] = useState(false);
+  const [progresso, setProgresso] = useState(0);
 
   async function listaTarefas() {
       console.log("Lista Tarefas");
@@ -28,17 +28,25 @@ function ListaTarefaScreen({ navigation }) {
       }
   }
 
+  function calculaProgresso() {
+    console.log(listaTarefa[0]);
+
+  }
+
   useEffect(() => {
     if(iniciado === false) {
       console.log('Carregando lista de Tarefas com useEffect');
       listaTarefas();
+      calculaProgresso();
       setIniciado(true);
     }
   });
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Lista de Tarefas</Text>
+      <ProgressBar completed = {progresso}/> 
       <View style={styles.formulario}>
         <FlatList
           data={listaTarefa}
@@ -60,16 +68,14 @@ function ListaTarefaScreen({ navigation }) {
               <Text style={styles.textoListaDescricao}>{item.descricao}</Text>
           </TouchableOpacity>
           }
-        />
-        
-        {/* <ProgressBar completed={30}/>  */}
-      
+        />     
       </View>
       <View style={styles.conjuntoBotoes}>
         <TouchableOpacity
             style={styles.botaoListaTarefas}
             onPress={() => {
                 listaTarefas();
+                calculaProgresso();
             }}
           >
               <Ionicons name="ios-refresh" size={40} color='white'/>
@@ -78,7 +84,7 @@ function ListaTarefaScreen({ navigation }) {
           <TouchableOpacity
             style={styles.botaoInsereTarefa}
             onPress={() => {
-                consonle.log("Gera cronograma");
+                navigation.navigate('Cronograma');
             }}
           >
               <Ionicons name="md-calendar" size={40} color='white'/>
@@ -87,7 +93,13 @@ function ListaTarefaScreen({ navigation }) {
           <TouchableOpacity
             style={styles.botaoInsereTarefa}
             onPress={() => {
-              navigation.navigate('Tarefa');
+              navigation.navigate('Tarefa',{
+                id: null,
+                titulo: null,
+                prazo: null,
+                descricao: null,
+                status: "Não Concluído"
+              });
             }}
           >
               <Ionicons name="ios-add" size={40} color='white'/>
