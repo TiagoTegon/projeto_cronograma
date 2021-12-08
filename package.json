@@ -28,7 +28,8 @@
     "sequelize-cli": "^6.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "nodemon": "^2.0.15"
   },
   "private": true
 }

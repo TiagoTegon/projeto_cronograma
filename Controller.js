@@ -6,6 +6,7 @@ const models = require('./models');
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({extended : false}));
+app.use(bodyParser.json());
 let tarefa = models.Tarefa;
 let subtarefa = models.SubTarefa;
 
@@ -111,6 +112,57 @@ app.get('/subtarefa/excluir', async(req,res) =>{
         where: {id : 1}
     });
     res.send(excluir);  
+});
+
+//Inserir e alterar tarefa
+app.post('/tarefa/grava',async(req,res) =>{
+    if(req.body.id == null){
+        // inclusão
+        let insere = await tarefa.create({
+            titulo: req.body.titulo,
+            prazo: req.body.prazo,
+            descricao: req.body.descricao,
+            status: req.body.status,
+            dataFazer: req.body.dataFazer,
+            tempoTotal: req.body.tempoTotal,
+            createdAt: new Date(),
+            updateAt: new Date()
+        });
+        console.log(insere);
+        res.send(JSON.stringify(value='Inclusao ok'));
+    } else {
+        // alteração
+        let alterar = await tarefa.update({
+            titulo: req.body.titulo,
+            prazo: req.body.prazo,
+            descricao: req.body.descricao,
+            status: req.body.status,
+            dataFazer: req.body.dataFazer,
+            tempoTotal: req.body.tempoTotal,
+            updateAt: new Date()
+        }, 
+            {where: {id: req.body.id} 
+        });
+        console.log(alterar);
+        if(alterar[0] == 0){
+            res.send(JSON.stringify(value='Alteracao erro'));
+        } else {
+            res.send(JSON.stringify(value='Alteracao ok'));
+        }
+    }
+});
+
+//Excluir tarefa
+app.post('/tarefa/exclui',async(req,res) => {
+    let excluir = await tarefa.destroy({
+        where: {id: req.body.id}
+    });
+    console.log(excluir);
+    if(excluir == 0){
+        res.send(JSON.stringify(value='Exclusao erro'));
+    } else {
+        res.send(JSON.stringify(value='Exclusao ok'));
+    }
 });
 
 let port = process.env.PORT || 3000;
