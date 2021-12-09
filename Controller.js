@@ -57,13 +57,21 @@ app.get('/subtarefa/consulta',async(req,res) => {
     let consulta = await subtarefa.findAll({
         attributes: ['titulo','duracao','status','tarefaId']
     });
-    res.send(consulta);
+    if(consulta === null){
+        res.send(JSON.stringify(value='erro'));
+    } else {
+        res.send(consulta);
+    }
 });
 
 // Consulta as sub-tarefas de uma tarefa
-app.get('/tarefa/consulta_subtarefas',async(req,res) => {
-    let consulta = await subtarefa.findAll({where: {tarefaId: 2} , attributes: ['titulo', 'duracao', 'status']});
-    res.send(consulta);
+app.post('/tarefa/consulta_subtarefas',async(req,res) => {
+    let consulta = await subtarefa.findAll({where: {tarefaId: req.body.tarefaId} , attributes: ['id','titulo', 'duracao', 'status']});
+    if(consulta === null){
+        res.send(JSON.stringify(value='erro'));
+    } else {
+        res.send(consulta);
+    } 
 });
 
 // Consulta uma tarefa
@@ -190,10 +198,67 @@ app.get('/tarefa/progresso',async(req,res) => {
         where: { status: {[Op.like]: 'Concluído'}}
     });
     console.log(progresso); 
-    let total = await tarefa.count();
-    console.log(total);
-    res.send((progresso/total)*100);
-})
+    res.status(200).send((progresso).toString());
+});
+
+//Inserir e alterar sub tarefa
+app.post('/subtarefa/grava',async(req,res) =>{
+    if(req.body.id == null){
+        // inclusão
+        let insere = await subtarefa.create({
+            titulo: req.body.titulo,
+            duracao: req.body.duracao,
+            status: req.body.status,
+            tarefaId: req.body.tarefaId,
+            createdAt: new Date(),
+            updateAt: new Date()
+        });
+        console.log(insere);
+        res.send(JSON.stringify(value='Inclusao ok'));
+    } else {
+        // alteração
+        let alterar = await subtarefa.update({
+            titulo: req.body.titulo,
+            duracao: req.body.duracao,
+            status: req.body.status,
+            tarefaId: req.body.tarefaId,
+            updateAt: new Date()
+        }, 
+            {where: {id: req.body.id} 
+        });
+        console.log(alterar);
+        if(alterar[0] == 0){
+            res.send(JSON.stringify(value='Alteracao erro'));
+        } else {
+            res.send(JSON.stringify(value='Alteracao ok'));
+        }
+    }
+});
+
+//Excluir sub tarefa
+app.post('/subtarefa/exclui',async(req,res) => {
+    let excluir = await subtarefa.destroy({
+        where: {id: req.body.id}
+    });
+    console.log(excluir);
+    if(excluir == 0){
+        res.send(JSON.stringify(value='Exclusao erro'));
+    } else {
+        res.send(JSON.stringify(value='Exclusao ok'));
+    }
+});
+
+//Verifica a progressão de termino das sub tarefas para a barra
+app.post('/subtarefa/progresso',async(req,res) => {
+    let progresso = await subtarefa.count({
+        where: { 
+            status: {[Op.like]: 'Concluído'},
+            [Op.and]: [{ tarefaId: req.body.tarefaId}]
+        }
+    });
+    console.log(progresso); 
+    res.status(200).send((progresso).toString());
+});
 
 let port = process.env.PORT || 3000;
 app.listen(port,(req,res) => {

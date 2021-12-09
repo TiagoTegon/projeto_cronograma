@@ -5,54 +5,60 @@ import ProgressBar from '../../util/progress-bar.component';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-function ListaTarefaScreen({ navigation }) {
+function ListaSubTarefaScreen({ route, navigation }) {
 
-  const [listaTarefa, setListaTarefa] = useState([]);
+  const [listaSubTarefa, setListaSubTarefa] = useState([]);
+  const [tarefaId, setTarefaId] = useState(route.params.id);
   const [iniciado, setIniciado] = useState(false);
   const [progresso, setProgresso] = useState(0);
 
-  async function listaTarefas() {
-      console.log("Lista Tarefas");
+  async function listaSubTarefas() {
+      console.log("Lista Sub Tarefas");
       try {
-          let response = await fetch(input='http://192.168.100.21:3000/tarefa/consulta', init= {
-              method: 'GET',
+          let response = await fetch(input='http://192.168.100.21:3000/tarefa/consulta_subtarefas', init= {
+              method: 'POST',
               headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json'
               },
+              body: JSON.stringify(value={
+                  tarefaId: tarefaId
+              })
           });
+
           let json = await response.json();
-          setListaTarefa(json);
+          setListaSubTarefa(json);
       } catch (error) {
-          console.log("Erro");
+          console.log("Erro Carrega"+error);
       }
   }
 
   async function calculaProgresso() {
-    console.log(listaTarefa.length);
-    let total = listaTarefa.length;
+
+    let total = listaSubTarefa.length;
     
-    let response = await fetch(input='http://192.168.100.21:3000/tarefa/progresso', init= {
-      method: 'GET',
+    let response = await fetch(input='http://192.168.100.21:3000/subtarefa/progresso', init= {
+      method: 'POST',
       headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
       },
+      body: JSON.stringify(value={
+          tarefaId: tarefaId
+      })
     });
 
     let concluidos = await response.json();
 
     console.log(concluidos);
-    if(total != 0){
-      setProgresso(Number((concluidos/total)*100).toFixed(2));
-    }
+    setProgresso(Number((concluidos/total)*100).toFixed(2));
     console.log(progresso);
   }
 
   useEffect(() => {
     if(iniciado === false) {
       console.log('Carregando lista de Tarefas com useEffect');
-      listaTarefas();
+      listaSubTarefas();
       calculaProgresso();
       setIniciado(true);
     }
@@ -61,27 +67,27 @@ function ListaTarefaScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Lista de Tarefas</Text>
+      <Text style={styles.titulo}>Lista de Sub Tarefas</Text>
       <ProgressBar completed = {progresso}/> 
       <View style={styles.formulario}>
         <FlatList
-          data={listaTarefa}
+          data={listaSubTarefa}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({item}) =>
           <TouchableOpacity
             style={styles.lista}
             onPress={() => {
-              navigation.navigate('Tarefa',{
+              navigation.navigate('SubTarefa',{
                 id: item.id.toString(),
+                tarefaId: item.tarefaId,
                 titulo: item.titulo,
-                prazo: item.prazo,
-                descricao: item.descricao,
+                duracao: item.duracao,
                 status: item.status
               });
             }}
           >
               <Text style={styles.textoListaTitulo}>{item.titulo}</Text>
-              <Text style={styles.textoListaDescricao}>{item.descricao}</Text>
+              <Text style={styles.textoListaDuracao}>{item.duracao}</Text>
           </TouchableOpacity>
           }
         />     
@@ -90,7 +96,7 @@ function ListaTarefaScreen({ navigation }) {
         <TouchableOpacity
             style={styles.botaoListaTarefas}
             onPress={() => {
-                listaTarefas();
+                listaSubTarefas();
                 calculaProgresso();
             }}
           >
@@ -100,20 +106,11 @@ function ListaTarefaScreen({ navigation }) {
           <TouchableOpacity
             style={styles.botaoInsereTarefa}
             onPress={() => {
-                navigation.navigate('Cronograma');
-            }}
-          >
-              <Ionicons name="md-calendar" size={40} color='white'/>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.botaoInsereTarefa}
-            onPress={() => {
-              navigation.navigate('Tarefa',{
+              navigation.navigate('SubTarefa',{
                 id: null,
+                tarefaId: tarefaId,
                 titulo: null,
-                prazo: null,
-                descricao: null,
+                duracao: null,
                 status: "Não Concluído"
               });
             }}
@@ -125,4 +122,4 @@ function ListaTarefaScreen({ navigation }) {
   );
 }
 
-export default ListaTarefaScreen;
+export default ListaSubTarefaScreen;

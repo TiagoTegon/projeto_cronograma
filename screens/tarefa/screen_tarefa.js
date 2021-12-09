@@ -181,9 +181,20 @@ function TarefaScreen({ route, navigation }) {
           mode = "dropdown"
           style={styles.picker}
         >
-          <Picker.Item label="Não Concluído" value="Não Concluído" />
-          <Picker.Item label="Concluído" value="Concluído" />
+          <Picker.Item style={styles.pickerItem} label="Não Concluído" value="Não Concluído" />
+          <Picker.Item style={styles.pickerItem} label="Concluído" value="Concluído" />
         </Picker>
+
+        <TouchableOpacity
+          style={styles.botaoSubTarefas}
+          onPress={() => {
+            navigation.navigate('ListaSubTarefas',{
+              id: tarefaId
+            })
+          }}
+        >
+          <Text  style={styles.textoBotao}>Sub Tarefas</Text>
+        </TouchableOpacity>
         <Text style={styles.textoMensagem}>{mensagem}</Text>
       </View>
       <View style={styles.conjuntoBotoes}>
