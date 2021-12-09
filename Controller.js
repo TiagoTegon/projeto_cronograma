@@ -191,6 +191,40 @@ app.get('/cronograma',async(req,res) => {
     }
 });
 
+// Verifica tarefa atrasada
+app.post('/cronograma_prazo',async(req,res) => {
+
+    let hoje = new Date();
+    let amanha = new Date(hoje);
+    amanha.setDate(amanha.getDate() + 1);
+
+    let consulta = await tarefa.update({
+        status: "Atrasada",
+        updateAt: new Date()
+    },
+        {where: {
+            status: {[Op.like]: 'Nao Concluido'},
+            [Op.and]: [{prazo: {[Op.lt]: new Date(amanha)}}]
+        }
+    });
+});
+
+// Adiciona a data para fazer uma determinada tarefa
+app.post('/cronograma_data',async(req,res) => {
+    let consulta = await tarefa.update({
+        dataFazer: req.body.dataFazer,
+        updateAt: new Date()
+    },
+        {where: {id: req.body.id}
+    });
+
+    // let hoje = new Date();
+    // let amanha = new Date(hoje);
+    // console.log(amanha);
+    // amanha.setDate(amanha.getDate() + 2);
+    // console.log(amanha);
+});
+
 
 //Verifica a progressão de termino das tarefas para a barra
 app.get('/tarefa/progresso',async(req,res) => {

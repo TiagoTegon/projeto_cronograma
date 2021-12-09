@@ -51,7 +51,9 @@ function ListaSubTarefaScreen({ route, navigation }) {
     let concluidos = await response.json();
 
     console.log(concluidos);
-    setProgresso(Number((concluidos/total)*100).toFixed(2));
+    if(total != 0){
+      setProgresso(Number((concluidos/total)*100).toFixed(2));
+    }
     console.log(progresso);
   }
 

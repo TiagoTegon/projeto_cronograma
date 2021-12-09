@@ -26,6 +26,7 @@ function SubTarefaScreen({ route, navigation }) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(value={
+            id: subTarefaId,
             titulo: titulo,
             duracao: duracao,
             status: status,
@@ -94,18 +95,18 @@ function SubTarefaScreen({ route, navigation }) {
 
         <Text style={styles.texto}>Duração:</Text>
         <Picker
-          selectedValue={status}
+          selectedValue={duracao}
           onValueChange={(value, index) =>
           setDuracao(value)}
           mode = "dropdown"
           style={styles.picker}
         >
-          <Picker.Item style={styles.pickerItem} label="900" value="900" />
-          <Picker.Item style={styles.pickerItem} label="1800" value="1800" />
-          <Picker.Item style={styles.pickerItem} label="2700" value="2700" />
-          <Picker.Item style={styles.pickerItem} label="3600" value="3600" />
-          <Picker.Item style={styles.pickerItem} label="5400" value="5400" />
-          <Picker.Item style={styles.pickerItem} label="7200" value="7200" />
+          <Picker.Item style={styles.pickerItem} label="15 min" value="900" />
+          <Picker.Item style={styles.pickerItem} label="30 min" value="1800" />
+          <Picker.Item style={styles.pickerItem} label="45 min" value="2700" />
+          <Picker.Item style={styles.pickerItem} label="1 hora" value="3600" />
+          <Picker.Item style={styles.pickerItem} label="1:30 hora" value="5400" />
+          <Picker.Item style={styles.pickerItem} label="2 horas" value="7200" />
         </Picker>
 
         <Text style={styles.texto}>Status:</Text>

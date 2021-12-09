@@ -59,7 +59,7 @@ function TarefaScreen({ route, navigation }) {
           prazo: prazo,
           descricao: descricao,
           status: status,
-          dataFazer: new Date(),
+          dataFazer: null,
           tempoTotal: null
         })
       });
@@ -165,7 +165,7 @@ function TarefaScreen({ route, navigation }) {
           onChangeText={setPrazo}
           value={prazo}
         /> */}
-        <Text style={styles.entrada}>{prazo}</Text>
+        <Text style={styles.entrada}>{prazo.slice(8,10)}-{prazo.slice(5,7)}-{prazo.slice(0,4)}</Text>
         <Text style={styles.texto}>Descricao:</Text>
         <TextInput
           style={styles.entrada}
