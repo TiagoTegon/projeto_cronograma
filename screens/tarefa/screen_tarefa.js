@@ -108,14 +108,14 @@ function TarefaScreen({ route, navigation }) {
         setMensagem("Tarefa excluida com sucesso");
         setTarefaId(null);
         setTitulo(null);
-        setPrazo(null);
+        setPrazo(new Date().toISOString());
         setDescricao(null);
       }
       else {
         setMensagem("Erro na exclusão da Tarefa");
         setTarefaId(null);
         setTitulo(null);
-        setPrazo(null);
+        setPrazo(new Date().toISOString());
         setDescricao(null);
       }
     }
@@ -165,7 +165,9 @@ function TarefaScreen({ route, navigation }) {
           onChangeText={setPrazo}
           value={prazo}
         /> */}
-        <Text style={styles.entrada}>{prazo.slice(8,10)}-{prazo.slice(5,7)}-{prazo.slice(0,4)}</Text>
+
+        {/* .slice(8,10)}-{prazo.slice(5,7)}-{prazo.slice(0,4) */}
+        <Text style={styles.entrada}>{prazo}</Text>
         <Text style={styles.texto}>Descricao:</Text>
         <TextInput
           style={styles.entrada}
