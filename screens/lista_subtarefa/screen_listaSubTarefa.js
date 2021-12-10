@@ -69,7 +69,6 @@ function ListaSubTarefaScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Lista de Sub Tarefas</Text>
       <ProgressBar completed = {progresso}/> 
       <View style={styles.formulario}>
         <FlatList

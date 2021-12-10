@@ -84,7 +84,6 @@ function SubTarefaScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Sub Tarefa</Text>
       <View style={styles.formulario}>
         <Text style={styles.texto}>Título:</Text>
         <TextInput

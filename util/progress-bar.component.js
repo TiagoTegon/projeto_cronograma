@@ -5,7 +5,7 @@ import {Text, View} from 'react-native';
 
 function ProgressBar(props) {
     const completed  = props.completed;
-    const bgcolor = "#2377c4";
+    const bgcolor = "#b31de0";
 
     const containerStyles = {
         height: 40,

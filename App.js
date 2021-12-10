@@ -13,13 +13,45 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="ListaDeTarefas" component={ListaTarefaScreen} />
-        <Stack.Screen name="Tarefa" component={TarefaScreen} />
-        <Stack.Screen name="Cronograma" component={CronogramaScreen} />
-        <Stack.Screen name="ListaSubTarefas" component={ListaSubTarefaScreen} />
-        <Stack.Screen name="SubTarefa" component={SubTarefaScreen} />
+      <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor:'#9fc4f5',
+        },
+        headerTintColor: "#FF0043",
+        headerTitleAlign:'center',
+        headerTitleStyle: {
+          fontWeight: "bold",
+          fontSize: 30,
+        }
+      }}
+      >
+        <Stack.Screen  name="ListaDeTarefas" component={ListaTarefaScreen} 
+        options={{
+          title: 'Lista de Tarefas',
+        }}/>
+        <Stack.Screen name="Tarefa" component={TarefaScreen} 
+        options={{
+          title: 'Tarefa',
+        }}
+        />
+        <Stack.Screen name="Cronograma" component={CronogramaScreen} 
+        options={{
+          title: 'Cronograma',
+        }}
+        />
+        <Stack.Screen name="ListaSubTarefas" component={ListaSubTarefaScreen} 
+        options={{
+          title: 'Lista de Sub Tarefas',
+        }}
+        />
+        <Stack.Screen name="SubTarefa" component={SubTarefaScreen} 
+        options={{
+          title: 'Sub Tarefas',
+        }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+

@@ -61,7 +61,6 @@ function ListaTarefaScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Lista de Tarefas</Text>
       <ProgressBar completed = {progresso}/> 
       <View style={styles.formulario}>
         <FlatList
@@ -112,7 +111,7 @@ function ListaTarefaScreen({ navigation }) {
               navigation.navigate('Tarefa',{
                 id: null,
                 titulo: null,
-                prazo: null,
+                prazo: new Date().toISOString(),
                 descricao: null,
                 status: "Não Concluído"
               });

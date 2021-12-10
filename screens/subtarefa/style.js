@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
   },
   texto: {
     color: "black",
-    fontSize: 22,
+    fontSize: 25,
+    fontWeight: "bold"
   },
   entrada: {
     width: "90%",
@@ -24,11 +25,10 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     paddingLeft: 10,
-    color: "blue",
+    color: "black",
     fontSize: 20,
-    fontWeight: "bold",
-    borderWidth: 3,
-    borderColor: 'orange'
+    borderWidth: 2,
+    borderColor: 'black'
   },
   formulario: {
     width: "100%",
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     fontSize: 20,
-    color: "blue",
+    color: "black",
     backgroundColor: "#f0f0f0",
   },
   botaoData: {

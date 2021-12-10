@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     },
     formulario: {
       width: "100%",
-      height: "80%",
+      height: "90%",
       bottom: 0,
       backgroundColor: "#ede9e8",
       alignItems: "center",
@@ -26,20 +26,28 @@ const styles = StyleSheet.create({
       borderBottomRightRadius: 30,
     },
     lista: {
-      backgroundColor: '#dafacf',
+      backgroundColor: '#fca4a7',
       height: 80,
       margin: 5,
-      width: 550,
-      justifyContent: 'center',
-      alignItems: 'center',
+      width: "98%",
       borderRadius: 20,
-      borderWidth: 5,
-      borderColor: 'orange'
+      borderWidth: 0,
+      borderColor: 'black',
     },
     textoListaTitulo: {
-      fontSize: 30,
-      fontWeight: 'bold',
-      color: "black",
+      // fontSize: 40,
+      // fontWeight: 'bold',
+      // color: "black",
+      justifyContent: 'center',
+      height: 75,
+    },
+    textoListaDestaque: {
+      justifyContent: 'center',
+      height: 75,
+      backgroundColor: '#ff4f4f',
+      borderWidth: 0,
+      borderRadius: 50,
+      borderColor: 'black'
     },
     textoListaDescricao: {
       fontSize: 16,
@@ -84,6 +92,19 @@ const styles = StyleSheet.create({
       backgroundColor: "#ff0043",
       marginRight: 5,
     },
+    tabela: {
+      width: "90%",
+      paddingTop: 20,
+      marginTop: 10,
+    },
+    tabelacabecalho:{
+      //flex: 1/3,
+      fontWeight: 'bold',
+      //fontSize: '12px',
+      height: 70,
+      alignItems: 'center',
+      
+    }
 });
 
 export default styles;

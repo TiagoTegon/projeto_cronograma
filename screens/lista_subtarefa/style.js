@@ -26,15 +26,15 @@ const styles = StyleSheet.create({
       borderBottomRightRadius: 30,
     },
     lista: {
-      backgroundColor: '#dafacf',
+      backgroundColor: '#fca4a7',
       height: 80,
       margin: 5,
       width: 550,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 20,
-      borderWidth: 5,
-      borderColor: 'orange'
+      borderWidth: 3,
+      borderColor: 'black'
     },
     textoListaTitulo: {
       fontSize: 30,

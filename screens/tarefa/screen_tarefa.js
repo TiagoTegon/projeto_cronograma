@@ -19,6 +19,7 @@ function TarefaScreen({ route, navigation }) {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -122,7 +123,6 @@ function TarefaScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Tarefa</Text>
       <View style={styles.formulario}>
         <Text style={styles.texto}>Título:</Text>
         <TextInput

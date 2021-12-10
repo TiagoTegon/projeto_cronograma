@@ -69,13 +69,12 @@ function CronogramaScreen({  navigation }) {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.titulo}>Cronograma</Text>
         <View style={styles.formulario}>
-        <DataTable>
-          <DataTable.Header>
-            <DataTable.Title> Data Marcada</DataTable.Title> 
-            <DataTable.Title> Título</DataTable.Title> 
-            <DataTable.Title> Prazo</DataTable.Title> 
+        <DataTable style={styles.tabela}>
+          <DataTable.Header style={styles.tabelacabecalho}>
+            <DataTable.Title style={styles.textoListaTitulo}><Text style={{fontSize: 25, fontWeight: 'bold', color: "black"}}>Data Marcada</Text></DataTable.Title> 
+            <DataTable.Title style={styles.textoListaTitulo}><Text style={{fontSize: 25, fontWeight: 'bold', color: "black"}}>Título</Text></DataTable.Title> 
+            <DataTable.Title style={styles.textoListaTitulo}><Text style={{fontSize: 25, fontWeight: 'bold', color: "black"}}>Prazo</Text></DataTable.Title> 
           </DataTable.Header>
         <FlatList
           data={cronograma}
@@ -95,10 +94,10 @@ function CronogramaScreen({  navigation }) {
             }}
           >
               <DataTable>
-                <DataTable.Row>
-                <DataTable.Cell style={styles.textoListaDescricao}>{item.dataFazer.slice(8, 10)}-{item.dataFazer.slice(5, 7)}</DataTable.Cell> 
-                <DataTable.Cell style={styles.textoListaTitulo}>{item.titulo}</DataTable.Cell> 
-                <DataTable.Cell style={styles.textoListaDescricao}>{item.prazo.slice(8, -14)}-{item.prazo.slice(5, -17)}</DataTable.Cell> 
+                <DataTable.Row style={{height: 10}}>
+                <DataTable.Cell style = {styles.textoListaDestaque}><Text style={{fontSize: 22, color: "black", fontWeight: "bold"}}>{item.dataFazer.slice(8, 10)}/{item.dataFazer.slice(5, 7)}</Text></DataTable.Cell> 
+                <DataTable.Cell style = {styles.textoListaTitulo}><Text style={{fontSize: 22}}>{item.titulo}</Text></DataTable.Cell> 
+                <DataTable.Cell style = {styles.textoListaTitulo}><Text style={{fontSize: 22}}>{item.prazo.slice(8, -14)}/{item.prazo.slice(5, -17)}</Text></DataTable.Cell> 
                 </DataTable.Row>
                 </DataTable>
           </TouchableOpacity>
